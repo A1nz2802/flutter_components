@@ -10,8 +10,8 @@ class InputsScreen extends StatelessWidget {
     final GlobalKey<FormState> myFormKey = GlobalKey<FormState>();
 
     final Map<String, String> formValues = {
-      'nombre': 'a1nz',
-      'apellidos': 'wall',
+      'first_name': 'a1nz',
+      'last_name': 'wall',
       'email': 'algo@google.com',
       'password': 'coolpassword',
       'role': 'admin'
@@ -27,29 +27,54 @@ class InputsScreen extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 20),
-                const CustomInputField(
+                CustomInputField(
                   hintText: 'Nombre del usuario',
                   labelText: 'Nombre',
                   keyboardType: TextInputType.name,
+                  formProperty: 'first_name',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   hintText: 'Apellido del usuario',
                   labelText: 'Apellido',
                   keyboardType: TextInputType.name,
+                  formProperty: 'last_name',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   hintText: 'Correo del usuario',
                   labelText: 'Correo',
                   keyboardType: TextInputType.emailAddress,
+                  formProperty: 'email',
+                  formValues: formValues,
                 ),
                 const SizedBox(height: 30),
-                const CustomInputField(
+                CustomInputField(
                   hintText: 'Contraseña del usuario',
                   labelText: 'Contraseña',
                   keyboardType: TextInputType.name,
                   obscureText: true,
+                  formProperty: 'password',
+                  formValues: formValues,
+                ),
+                const SizedBox(height: 30),
+                DropdownButtonFormField(
+                  value: 'Admin',
+                  items: const [
+                    DropdownMenuItem(value: 'Admin', child: Text('Admin')),
+                    DropdownMenuItem(
+                        value: 'Superuser', child: Text('Superuser')),
+                    DropdownMenuItem(
+                        value: 'Developer', child: Text('Developer')),
+                    DropdownMenuItem(
+                        value: 'Jr. Developer', child: Text('Jr. Developer'))
+                  ],
+                  onChanged: (value) {
+                    print(value);
+                    formValues['role'] = value ?? 'Admin';
+                  },
                 ),
                 const SizedBox(height: 30),
                 ElevatedButton(
@@ -59,6 +84,7 @@ class InputsScreen extends StatelessWidget {
                       print('Formulario no válido');
                       return;
                     }
+                    print(formValues);
                   },
                   child: const SizedBox(
                     width: double.infinity,
